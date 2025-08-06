@@ -25,6 +25,24 @@ app.get('/api/produtos', async (req, res) => {
     }
 })
 
+// Rota para buscar só um produto pelo seu ID
+app.get('/api/produtos/:id', async (req, res) => {
+    const {id} = req.params;
+    try{
+        const query = 'SELECT * FROM produtos WHERE id = ?';
+        const [produtos] = await bd.query(query, [id]);
+        
+        if(produtos.length > 0){
+            res.status(200).json(produtos[0]);
+        }else{
+            res.status(404).json({message:'Produto não encontrado.'});
+        }
+    }catch(error){
+        console.error('Erro ao buscar o produto:', error);
+        res.status(500).json({message: 'Erro interno do servidor.'});
+    }
+});
+
 app.listen(PORT, ()=>{
     console.log(`Servidor rodando na porta ${PORT}`);
 });
