@@ -1,0 +1,10 @@
+#dependencias
+/node_modules
+/client/node_modules
+
+#arquivos de build
+/client/build
+
+#arquivos de ambiente
+.env
+*.env.local
